@@ -30,7 +30,7 @@ export default {
   @apply mb-2 shadow-lg bg-white text-neutral-content w-full;
 
   &_wrapper {
-    @apply container mx-auto;
+    @apply container mx-auto flex justify-between w-full;
   }
 
   &_logo {
@@ -38,7 +38,6 @@ export default {
   }
 
   &_right {
-    @apply flex-none hidden md:flex;
 
     &_avatar {
       @apply relative inline-flex;
