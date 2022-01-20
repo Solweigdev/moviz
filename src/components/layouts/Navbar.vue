@@ -4,9 +4,9 @@
       <div class="navbar_logo">
         <img :src="Logo" :alt="text_alt_logo">
       </div>
-      <div class="navbar_right">
+      <div v-if="user" class="navbar_right">
         <div class="navbar_right_avatar">
-            <img class="navbar_right_avatar_img" src="https://i.pravatar.cc/500?img=32">
+            <p class="navbar_right_avatar_pseudo">{{ text_welcome }} <span class="font-bold">{{ user.pseudo }}</span></p>
         </div>
       </div>
     </div>
@@ -18,10 +18,24 @@ import Logo from './../../assets/logo.svg'
 export default {
   name: "Navbar",
 
+  props: ['user'],
+
   data: () => ({
     Logo,
-    text_alt_logo: 'Logo Moviz'
-  })
+    text_alt_logo: 'Logo Moviz',
+    text_welcome: 'Welcome'
+  }),
+
+  mounted() {
+    console.log('ii', this.user)
+  },
+
+  watch: {
+    user: function() {
+      return this.user
+    }
+  }
+
 }
 </script>
 
@@ -42,8 +56,8 @@ export default {
     &_avatar {
       @apply relative inline-flex;
 
-      &_img {
-        @apply rounded-full w-10 h-10 m-1;
+      &_pseudo {
+        @apply text-black capitalize;
       }
     }
   }

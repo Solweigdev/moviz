@@ -1,10 +1,10 @@
 <template>
   <div class="game">
-    <navbar-component/>
+    <navbar-component v-if="user" :user="user"/>
     <div class="game_wrapper">
       <div class="game_wrapper_header">
         <div class="game_wrapper_header_timer">
-          <p class="game_wrapper_header_timer_text">{{ text_timer }}</p>
+          <p class="game_wrapper_header_timer_text">{{ timer }}</p>
         </div>
         <div class="game_wrapper_header_score">
           <p class="game_wrapper_header_score_new">{{ text_new_score_title }} {{ text_new_score_result }}</p>
@@ -40,7 +40,8 @@ export default {
   },
 
   data: () => ({
-    text_timer: '60',
+    timer: null ,
+    timers: null ,
     text_new_score_title: 'score :',
     text_new_score_result: '5',
     text_last_score_title: 'higth score :',
@@ -48,8 +49,26 @@ export default {
     text_actor: 'Robert Downey Jr.',
     text_movies: 'Stars wars',
     text_answer_yes: 'Yes',
-    text_answer_no: 'No'
-  })
+    text_answer_no: 'No',
+    user: null,
+  }),
+
+  beforeMount: function() {
+    this.$store.commit('SET_INIT_TIMER')
+  },
+
+  mounted: function() {
+    this.user = this.$store.getters.getUser
+    this.timer = this.$store.getters.getTimer
+    this.removeSeconds()
+  },
+
+  methods: {
+    removeSeconds: function () {
+      this.timer = this.timer - 1
+      setTimeout(function () { this.removeSeconds() }.bind(this), 1000)
+    }
+  }
 }
 </script>
 

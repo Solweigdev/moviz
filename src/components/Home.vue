@@ -1,16 +1,17 @@
 <template>
   <div class="home">
-    <navbar-component />
+    <navbar-component :user="user" />
     <div class="home_wrapper">
       <div class="home_wrapper_content">
         <div class="home_wrapper_content_left">
           <h1 class="home_wrapper_content_left_title">{{ txt_home_title }}</h1>
           <p>{{ txt_home_description }}</p>
-          <button class="btn btn-lg btn-primary home_wrapper_content_left_btn">
-            <img :src="Play" alt="">
-            {{ txt_home_btn_play }}
-          </button>
-          <button></button>
+          <router-link to="/game">
+            <button @click="" class="btn btn-lg btn-primary home_wrapper_content_left_btn">
+              <img :src="Play" alt="">
+              {{ txt_home_btn_play }}
+            </button>
+          </router-link>
         </div>
         <div class="home_wrapper_content_right">
           <img :src="IlluHomeOne" alt="">
@@ -38,8 +39,20 @@ export default {
     txt_home_description: "You'll be asked a series of \"Yes or No\" questions. Answer as many as you can in the allowed time ! Good luck !",
     txt_home_btn_play: "Play",
     IlluHomeOne,
-    Play
-  })
+    Play,
+    user: null
+  }),
+
+  created() {
+    this.$store.commit('SET_NEW_USER');
+    this.$store.dispatch("fetchMovies");
+
+  },
+
+  mounted: function() {
+    this.user = this.$store.getters.getUser;
+    console.log('th', this.user)
+  },
 }
 </script>
 
